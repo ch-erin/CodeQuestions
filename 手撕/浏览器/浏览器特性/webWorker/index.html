@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Web Worker 质数计算 demo</title>
+    <style>
+      .container {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+      }
+      .input-group {
+        margin: 10px 0;
+      }
+      input {
+        padding: 8px;
+        width: 150px;
+      }
+      button {
+        padding: 8px 16px;
+        margin: 0 5px;
+        cursor: pointer;
+      }
+      #progress {
+        height: 20px;
+        background: #eee;
+        margin: 10px 0;
+        overflow: hidden;
+      }
+      #progress-bar {
+        height: 100%;
+        background: #4caf50;
+        width: 0;
+        transition: width 0.3s;
+      }
+      #result {
+        margin: 10px 0;
+        padding: 10px;
+        border: 1px solid #ddd;
+        min-height: 100px;
+        white-space: pre-wrap;
+      }
+      .animation {
+        width: 50px;
+        height: 50px;
+        background: #2196f3;
+        margin: 20px 0;
+        animation: spin 1s linear infinite;
+      }
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+      .status {
+        color: #666;
+        margin: 5px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h3>质数范围计算器（Web Worker 示例）</h3>
+
+      <!-- 输入区域 -->
+      <div class="input-group">
+        <label>开始值：</label>
+        <input type="number" id="start" value="2" min="2" />
+        <label>结束值：</label>
+        <input type="number" id="end" value="100000" min="3" />
+        <button id="start-btn">开始计算</button>
+        <button id="cancel-btn" disabled>取消计算</button>
+      </div>
+
+      <!-- 进度条 -->
+      <div class="status">进度：<span id="progress-text">0%</span></div>
+      <div id="progress">
+        <div id="progress-bar"></div>
+      </div>
+
+      <!-- 结果展示 -->
+      <div>
+        <h4>计算结果：</h4>
+        <div id="result">请点击"开始计算"按钮</div>
+      </div>
+
+      <!-- 动画元素（验证主线程是否阻塞） -->
+      <div class="status">主线程状态（动画流畅表示未阻塞）：</div>
+      <div class="animation"></div>
+    </div>
+
+    <script>
+      // 初始化元素引用
+      const startInput = document.getElementById("start");
+      const endInput = document.getElementById("end");
+      const startBtn = document.getElementById("start-btn");
+      const cancelBtn = document.getElementById("cancel-btn");
+      const progressBar = document.getElementById("progress-bar");
+      const progressText = document.getElementById("progress-text");
+      const resultDiv = document.getElementById("result");
+
+      let worker = null; // Worker 实例
+
+      // 开始计算
+      startBtn.addEventListener("click", () => {
+        const start = parseInt(startInput.value, 10);
+        const end = parseInt(endInput.value, 10);
+
+        // 输入验证
+        if (isNaN(start) || isNaN(end) || start >= end) {
+          alert("请输入有效的范围（开始值 < 结束值）");
+          return;
+        }
+
+        // 重置状态
+        resultDiv.textContent = "计算中...";
+        progressBar.style.width = "0%";
+        progressText.textContent = "0%";
+        startBtn.disabled = true;
+        cancelBtn.disabled = false;
+
+        // 创建 Worker（如果不存在）
+        if (worker) worker.terminate(); // 终止可能存在的旧 Worker
+        worker = new Worker("prime-worker.js");
+
+        // 向 Worker 发送计算任务
+        worker.postMessage({
+          type: "calculate",
+          start,
+          end,
+        });
+
+        // 接收 Worker 消息（进度/结果/错误）
+        worker.onmessage = (e) => {
+          const { type, data } = e.data;
+          switch (type) {
+            case "progress":
+              // 更新进度
+              const percent = Math.round(data * 100);
+              progressBar.style.width = `${percent}%`;
+              progressText.textContent = `${percent}%`;
+              break;
+            case "result":
+              // 显示结果
+              resultDiv.textContent = `在 ${start}-${end} 范围内共找到 ${
+                data.length
+              } 个质数：\n${data.join(", ").slice(0, 500)}${
+                data.length > 50 ? "...（省略部分结果）" : ""
+              }`;
+              resetWorker();
+              break;
+            case "error":
+              resultDiv.textContent = `错误：${data}`;
+              resetWorker();
+              break;
+          }
+        };
+
+        // Worker 错误处理
+        worker.onerror = (err) => {
+          resultDiv.textContent = `Worker 错误：${err.message}`;
+          resetWorker();
+        };
+      });
+
+      // 取消计算
+      cancelBtn.addEventListener("click", () => {
+        if (worker) {
+          worker.postMessage({ type: "cancel" });
+          resultDiv.textContent = "计算已取消";
+          resetWorker();
+        }
+      });
+
+      // 重置 Worker 和 UI 状态
+      function resetWorker() {
+        if (worker) {
+          worker.terminate();
+          worker = null;
+        }
+        startBtn.disabled = false;
+        cancelBtn.disabled = true;
+      }
+    </script>
+  </body>
+</html>

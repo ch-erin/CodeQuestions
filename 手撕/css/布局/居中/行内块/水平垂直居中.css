@@ -1,0 +1,33 @@
+/* 结合text-align和vertical-align */
+.parent {
+  text-align: center;
+  height: 200px;
+  line-height: 200px;
+}
+.inline-block-child {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: normal;
+}
+
+/* 使用Flexbox */
+.flex-parent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
+
+/* 使用定位 */
+.parent {
+  position: relative;
+  height: 200px;
+  text-align: center; /* 如需水平居中 */
+}
+.inline-block-child {
+  display: inline-block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

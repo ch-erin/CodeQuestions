@@ -1,0 +1,31 @@
+/* 定宽块级元素水平居中 */
+.block-center {
+  width: 300px; /* 必须指定宽度 */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* 使用Flexbox使子元素水平居中 */
+.flex-container {
+  display: flex;
+  justify-content: center; /* 水平居中 */
+}
+
+/* 使用Grid使子元素水平居中 */
+.grid-container {
+  display: grid;
+  justify-content: center; /* 水平居中 */
+}
+
+/* 父容器：仅需设置宽度（可选，限制子元素居中范围） */
+.parent {
+  width: 500px; /* 父容器宽度可自定义，也可继承 */
+  border: 1px solid #000; /* 辅助查看，非必需 */
+}
+
+/* 子元素：核心是 margin: 0 auto（左右margin自动平分剩余空间） */
+.child {
+  width: 200px; /* 块级元素必须定宽，否则会占满父容器 */
+  margin: 0 auto; /* 上下margin为0，左右自动 → 水平居中 */
+  background: #f0f0f0; /* 辅助查看，非必需 */
+}

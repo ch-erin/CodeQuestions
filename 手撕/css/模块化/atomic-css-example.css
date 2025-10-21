@@ -1,0 +1,32 @@
+/* Atomic CSS/Utility-First 示例 (类似Tailwind) */
+/* 单一功能的原子类 */
+.p-4 {
+  padding: 1rem;
+}
+.mb-2 {
+  margin-bottom: 0.5rem;
+}
+.flex {
+  display: flex;
+}
+.justify-center {
+  justify-content: center;
+}
+.items-center {
+  align-items: center;
+}
+.bg-blue-500 {
+  background-color: #3b82f6;
+}
+.text-white {
+  color: white;
+}
+.rounded {
+  border-radius: 0.25rem;
+}
+.font-bold {
+  font-weight: 700;
+}
+
+/* 使用时组合这些类 */
+/* <button class="p-4 bg-blue-500 text-white rounded font-bold">Click</button> */

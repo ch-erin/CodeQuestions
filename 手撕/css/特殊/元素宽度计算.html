@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>文本元素宽度计算示例</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#3B82F6",
+              secondary: "#10B981",
+              accent: "#F59E0B",
+              neutral: "#6B7280",
+            },
+            fontFamily: {
+              sans: ["Inter", "system-ui", "sans-serif"],
+            },
+          },
+        },
+      };
+    </script>
+    <style type="text/tailwindcss">
+      @layer utilities {
+        .content-auto {
+          content-visibility: auto;
+        }
+        .demo-box {
+          @apply p-4 mb-6 border rounded-lg;
+        }
+        .demo-element {
+          @apply p-2 rounded mb-2;
+        }
+      }
+    </style>
+  </head>
+  <body class="p-6 max-w-4xl mx-auto bg-gray-50">
+    <h1 class="text-3xl font-bold mb-8 text-gray-800">文本元素宽度计算示例</h1>
+
+    <!-- 块级元素示例 - width: auto -->
+    <div class="demo-box bg-white shadow-sm">
+      <h2 class="text-xl font-semibold mb-4 text-primary">
+        1. 块级元素 (width: auto)
+      </h2>
+      <p class="text-neutral mb-4">
+        块级元素默认宽度会填充父容器可用空间，文本会根据容器宽度自动换行
+      </p>
+
+      <div class="demo-element bg-blue-50 border border-blue-200">
+        这是一个块级div元素，包含一段较长的文本内容。即使文本很长，块级元素的宽度仍然会充满父容器，文本会自动换行以适应容器宽度。
+      </div>
+
+      <div
+        class="demo-element bg-blue-50 border border-blue-200 mt-4"
+        style="width: 300px"
+      >
+        这个块级div设置了固定宽度300px，文本会在300px宽度内自动换行。
+      </div>
+    </div>
+
+    <!-- 行内元素示例 -->
+    <div class="demo-box bg-white shadow-sm">
+      <h2 class="text-xl font-semibold mb-4 text-secondary">
+        2. 行内元素 (inline)
+      </h2>
+      <p class="text-neutral mb-4">
+        行内元素的宽度由内容（文本）决定，不会独占一行
+      </p>
+
+      <p>
+        这是一段普通文本，其中包含<span
+          class="demo-element bg-green-50 border border-green-200"
+          >一个行内span元素，其宽度由文本内容决定</span
+        >，前后都是普通文本。
+      </p>
+
+      <p class="mt-4">
+        另一个例子：<span
+          class="demo-element bg-green-50 border border-green-200"
+          >短文本</span
+        >
+        <span class="demo-element bg-green-50 border border-green-200"
+          >这个行内元素包含更长的文本内容，它的宽度会自动适应文本长度</span
+        >
+      </p>
+    </div>
+
+    <!-- 行内块元素示例 -->
+    <div class="demo-box bg-white shadow-sm">
+      <h2 class="text-xl font-semibold mb-4 text-accent">
+        3. 行内块元素 (inline-block)
+      </h2>
+      <p class="text-neutral mb-4">
+        行内块元素宽度默认由内容决定，但可以设置宽度，且不会独占一行
+      </p>
+
+      <div>
+        <div
+          class="demo-element bg-yellow-50 border border-yellow-200 inline-block"
+        >
+          这是一个inline-block元素，宽度由内容决定
+        </div>
+
+        <div
+          class="demo-element bg-yellow-50 border border-yellow-200 inline-block mt-2"
+          style="width: 200px"
+        >
+          这个inline-block元素设置了固定宽度200px
+        </div>
+      </div>
+    </div>
+
+    <!-- 特殊情况：控制换行 -->
+    <div class="demo-box bg-white shadow-sm">
+      <h2 class="text-xl font-semibold mb-4 text-purple-600">
+        4. 特殊换行控制
+      </h2>
+      <p class="text-neutral mb-4">通过CSS控制文本换行行为，影响元素宽度</p>
+
+      <div
+        class="demo-element bg-purple-50 border border-purple-200 mb-4"
+        style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis"
+      >
+        这个块级元素设置了white-space:
+        nowrap，文本不会换行，超出部分会显示省略号。这是一段很长很长很长很长很长很长很长很长很长的文本。
+      </div>
+
+      <div
+        class="demo-element bg-purple-50 border border-purple-200"
+        style="width: 150px; word-break: break-all"
+      >
+        这个元素设置了word-break:
+        break-all，可以在单词中间换行：thisisareallylongwordtoshowhowwordbreakworks
+      </div>
+    </div>
+
+    <script>
+      // 显示各元素的实际宽度
+      document.addEventListener("DOMContentLoaded", () => {
+        const elements = document.querySelectorAll(".demo-element");
+        elements.forEach((el) => {
+          const width = el.offsetWidth;
+          const info = document.createElement("div");
+          info.className = "text-xs text-gray-500 mt-1";
+          info.textContent = `实际宽度: ${width}px`;
+          el.appendChild(info);
+        });
+      });
+    </script>
+  </body>
+</html>

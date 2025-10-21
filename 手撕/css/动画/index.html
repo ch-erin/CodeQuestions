@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>常用CSS动画效果</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css"
+      rel="stylesheet"
+    />
+    <style type="text/tailwindcss">
+      @layer utilities {
+        .content-auto {
+          content-visibility: auto;
+        }
+
+        /* 1. 淡入淡出动画 */
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+
+        .animate-fade-in {
+          animation: fadeIn 0.8s ease-in-out forwards;
+        }
+
+        /* 2. 滑动动画 */
+        @keyframes slideIn {
+          from {
+            transform: translateY(20px);
+            opacity: 0;
+          }
+          to {
+            transform: translateY(0);
+            opacity: 1;
+          }
+        }
+
+        .animate-slide-in {
+          animation: slideIn 0.6s ease-out forwards;
+        }
+
+        /* 3. 缩放动画 */
+        @keyframes scaleIn {
+          from {
+            transform: scale(0.8);
+            opacity: 0;
+          }
+          to {
+            transform: scale(1);
+            opacity: 1;
+          }
+        }
+
+        .animate-scale-in {
+          animation: scaleIn 0.5s ease-out forwards;
+        }
+
+        /* 4. 旋转动画 */
+        @keyframes rotateIn {
+          from {
+            transform: rotate(-10deg) scale(0.9);
+            opacity: 0;
+          }
+          to {
+            transform: rotate(0) scale(1);
+            opacity: 1;
+          }
+        }
+
+        .animate-rotate-in {
+          animation: rotateIn 0.6s ease-out forwards;
+        }
+
+        /* 5. 抖动动画 - 用于交互反馈 */
+        @keyframes shake {
+          0%,
+          100% {
+            transform: translateX(0);
+          }
+          20% {
+            transform: translateX(-5px);
+          }
+          40% {
+            transform: translateX(5px);
+          }
+          60% {
+            transform: translateX(-3px);
+          }
+          80% {
+            transform: translateX(3px);
+          }
+        }
+
+        .animate-shake {
+          animation: shake 0.5s ease-in-out;
+        }
+      }
+    </style>
+  </head>
+  <body class="bg-gray-100 min-h-screen p-8">
+    <div class="max-w-6xl mx-auto">
+      <h1 class="text-4xl font-bold text-center mb-12 text-gray-800">
+        常用CSS动画效果展示
+      </h1>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- 1. 淡入动画示例 -->
+        <div
+          class="bg-white rounded-lg shadow-lg p-6 transition-all hover:shadow-xl"
+        >
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-xl font-semibold text-gray-700">淡入效果</h2>
+            <i class="fa fa-lightbulb-o text-yellow-500 text-2xl"></i>
+          </div>
+          <p class="text-gray-600 mb-4">元素从完全透明过渡到完全可见</p>
+          <div
+            id="fadeInDemo"
+            class="w-full h-32 bg-blue-500 rounded-md opacity-0 flex items-center justify-center text-white text-xl"
+          >
+            淡入元素
+          </div>
+          <button
+            onclick="document.getElementById('fadeInDemo').classList.add('animate-fade-in')"
+            class="mt-4 w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded transition-colors"
+          >
+            触发淡入
+          </button>
+        </div>
+
+        <!-- 2. 滑动动画示例 -->
+        <div
+          class="bg-white rounded-lg shadow-lg p-6 transition-all hover:shadow-xl"
+        >
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-xl font-semibold text-gray-700">滑动效果</h2>
+            <i class="fa fa-arrow-down text-green-500 text-2xl"></i>
+          </div>
+          <p class="text-gray-600 mb-4">元素从下方滑动进入并逐渐显示</p>
+          <div
+            id="slideInDemo"
+            class="w-full h-32 bg-green-500 rounded-md opacity-0 transform translate-y-8 flex items-center justify-center text-white text-xl"
+          >
+            滑动元素
+          </div>
+          <button
+            onclick="document.getElementById('slideInDemo').classList.add('animate-slide-in')"
+            class="mt-4 w-full bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded transition-colors"
+          >
+            触发滑动
+          </button>
+        </div>
+
+        <!-- 3. 缩放动画示例 -->
+        <div
+          class="bg-white rounded-lg shadow-lg p-6 transition-all hover:shadow-xl"
+        >
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-xl font-semibold text-gray-700">缩放效果</h2>
+            <i class="fa fa-search-plus text-purple-500 text-2xl"></i>
+          </div>
+          <p class="text-gray-600 mb-4">元素从小尺寸缩放至正常大小并显示</p>
+          <div
+            id="scaleInDemo"
+            class="w-full h-32 bg-purple-500 rounded-md opacity-0 transform scale-80 flex items-center justify-center text-white text-xl"
+          >
+            缩放元素
+          </div>
+          <button
+            onclick="document.getElementById('scaleInDemo').classList.add('animate-scale-in')"
+            class="mt-4 w-full bg-purple-500 hover:bg-purple-600 text-white py-2 px-4 rounded transition-colors"
+          >
+            触发缩放
+          </button>
+        </div>
+
+        <!-- 4. 旋转动画示例 -->
+        <div
+          class="bg-white rounded-lg shadow-lg p-6 transition-all hover:shadow-xl"
+        >
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-xl font-semibold text-gray-700">旋转效果</h2>
+            <i class="fa fa-refresh text-orange-500 text-2xl"></i>
+          </div>
+          <p class="text-gray-600 mb-4">元素旋转并缩放至正常状态</p>
+          <div
+            id="rotateInDemo"
+            class="w-full h-32 bg-orange-500 rounded-md opacity-0 transform rotate-[-10deg] scale-90 flex items-center justify-center text-white text-xl"
+          >
+            旋转元素
+          </div>
+          <button
+            onclick="document.getElementById('rotateInDemo').classList.add('animate-rotate-in')"
+            class="mt-4 w-full bg-orange-500 hover:bg-orange-600 text-white py-2 px-4 rounded transition-colors"
+          >
+            触发旋转
+          </button>
+        </div>
+
+        <!-- 5. 抖动动画示例 -->
+        <div
+          class="bg-white rounded-lg shadow-lg p-6 transition-all hover:shadow-xl md:col-span-2 lg:col-span-1"
+        >
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="text-xl font-semibold text-gray-700">抖动效果</h2>
+            <i class="fa fa-exclamation-triangle text-red-500 text-2xl"></i>
+          </div>
+          <p class="text-gray-600 mb-4">
+            元素左右快速抖动，用于错误提示或交互反馈
+          </p>
+          <div
+            id="shakeDemo"
+            class="w-full h-32 bg-red-500 rounded-md flex items-center justify-center text-white text-xl"
+          >
+            抖动元素
+          </div>
+          <button
+            onclick="document.getElementById('shakeDemo').classList.add('animate-shake'); 
+                                setTimeout(() => document.getElementById('shakeDemo').classList.remove('animate-shake'), 500)"
+            class="mt-4 w-full bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded transition-colors"
+          >
+            触发抖动
+          </button>
+        </div>
+      </div>
+
+      <div class="mt-12 bg-white rounded-lg shadow-lg p-6">
+        <h2 class="text-2xl font-semibold text-gray-700 mb-4">动画应用说明</h2>
+        <ul class="list-disc pl-5 text-gray-600 space-y-2">
+          <li>淡入效果：适合页面加载时的元素显示、模态框弹出等场景</li>
+          <li>滑动效果：适合下拉菜单、通知提示、滚动加载内容等</li>
+          <li>缩放效果：适合按钮点击反馈、卡片显示、图片查看等</li>
+          <li>旋转效果：适合刷新按钮、加载状态、强调元素出现等</li>
+          <li>抖动效果：适合表单验证错误、操作失败、提醒用户注意等</li>
+        </ul>
+      </div>
+    </div>
+
+    <script>
+      // 页面加载完成后，为所有示例添加初始状态
+      document.addEventListener("DOMContentLoaded", () => {
+        // 可以在这里添加自动演示代码
+      });
+    </script>
+  </body>
+</html>

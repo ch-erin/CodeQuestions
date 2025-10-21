@@ -1,0 +1,13 @@
+/* 父元素设置text-align */
+.parent {
+  text-align: center;
+}
+.inline-block-child {
+  display: inline-block;
+}
+
+/* 使用Flexbox */
+.flex-parent {
+  display: flex;
+  justify-content: center;
+}

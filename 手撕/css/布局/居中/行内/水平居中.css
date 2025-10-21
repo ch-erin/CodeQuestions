@@ -1,0 +1,17 @@
+/* 父元素设置text-align使行内元素水平居中 */
+.parent {
+  text-align: center;
+}
+
+/* 父容器：用 text-align: center 让行内元素默认水平居中 */
+.parent {
+  text-align: center; /* 行内元素的核心居中规则 */
+  border: 1px solid #000; /* 辅助查看，非必需 */
+}
+
+/* 子元素：可选 margin 微调水平间距（非必需，按需添加） */
+.child {
+  display: inline; /* 或 inline-block，行内/行内块元素 */
+  margin: 0 10px; /* 左右各10px间距，微调位置，非必需 */
+  background: #f0f0f0; /* 辅助查看，非必需 */
+}

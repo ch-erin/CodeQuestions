@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div>
+      <h3>porxy实现数据双向绑定</h3>
+      <div>
+        <input type="text" id="input" />
+        <br />姓名：<span id="output"></span>
+      </div>
+    </div>
+
+    <script>
+      const input = document.querySelector("#input");
+      const output = document.querySelector("#output");
+
+      let data = {
+        name: "",
+      };
+
+      let model = new Proxy(data, {
+        get(target, property) {
+          return target[property];
+        },
+        set(target, property, value) {
+          target[property] = value;
+          if (property === "name") {
+            output.textContent = value;
+            input.value = value;
+          }
+          return true;
+        },
+      });
+
+      function setMane(value) {
+        model.name = value;
+      }
+
+      setMane("dy");
+      input.addEventListener("input", () => setMane("lyx"));
+    </script>
+  </body>
+</html>

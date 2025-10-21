@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>字符宽度与font-size关系示例</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css"
+      rel="stylesheet"
+    />
+    <style type="text/tailwindcss">
+      @layer utilities {
+        .char-box {
+          @apply inline-block border border-gray-300 text-center;
+        }
+        .measure-box {
+          @apply p-4 border rounded my-2 overflow-auto;
+        }
+        .monospace {
+          font-family: monospace;
+        }
+        .sans-serif {
+          font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+      }
+    </style>
+  </head>
+  <body class="p-6 max-w-4xl mx-auto bg-gray-50">
+    <h1 class="text-3xl font-bold mb-8 text-gray-800">
+      字符宽度与font-size关系演示
+    </h1>
+
+    <!-- 基础对比：相同font-size下的字符宽度差异 -->
+    <div class="bg-white p-6 rounded-lg shadow-sm mb-8">
+      <h2 class="text-xl font-semibold mb-4 text-blue-600">
+        1. 相同font-size下的字符宽度差异
+      </h2>
+      <p class="mb-4 text-gray-700">
+        下面所有文本的font-size均为24px，但不同字符宽度不同
+      </p>
+
+      <div class="measure-box bg-blue-50" style="font-size: 24px">
+        <p><strong>英文字母：</strong> i j l w m W M</p>
+        <p><strong>中文：</strong> 一 人 木 森 全</p>
+        <p><strong>数字：</strong> 1 2 3 8 9 0</p>
+        <p><strong>符号：</strong> . , ; ! @ # $ % & *</p>
+      </div>
+    </div>
+
+    <!-- 字符逐个展示：清晰显示每个字符的宽度 -->
+    <div class="bg-white p-6 rounded-lg shadow-sm mb-8">
+      <h2 class="text-xl font-semibold mb-4 text-green-600">
+        2. 单个字符宽度对比
+      </h2>
+      <p class="mb-4 text-gray-700">
+        每个字符被包裹在边框内，可直观看到宽度差异（font-size: 32px）
+      </p>
+
+      <div class="measure-box bg-green-50" style="font-size: 32px">
+        <p><strong>英文窄字符：</strong></p>
+        <div class="mb-3">
+          <span class="char-box">i</span>
+          <span class="char-box">j</span>
+          <span class="char-box">l</span>
+          <span class="char-box">t</span>
+          <span class="char-box">f</span>
+        </div>
+
+        <p><strong>英文宽字符：</strong></p>
+        <div class="mb-3">
+          <span class="char-box">w</span>
+          <span class="char-box">m</span>
+          <span class="char-box">W</span>
+          <span class="char-box">M</span>
+          <span class="char-box">B</span>
+        </div>
+
+        <p><strong>中文字符：</strong></p>
+        <div class="mb-3">
+          <span class="char-box">一</span>
+          <span class="char-box">二</span>
+          <span class="char-box">三</span>
+          <span class="char-box">木</span>
+          <span class="char-box">森</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 等宽字体 vs 比例字体 -->
+    <div class="bg-white p-6 rounded-lg shadow-sm mb-8">
+      <h2 class="text-xl font-semibold mb-4 text-purple-600">
+        3. 等宽字体 vs 比例字体
+      </h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <h3 class="font-semibold mb-2 text-purple-700">
+            比例字体 (sans-serif)
+          </h3>
+          <div
+            class="measure-box bg-purple-50 sans-serif"
+            style="font-size: 20px"
+          >
+            <p>abcdefghijklmnopqrstuvwxyz</p>
+            <p>ABCDEFGHIJKLMNOPQRSTUVWXYZ</p>
+            <p>1234567890!@#$%^&*()</p>
+          </div>
+        </div>
+
+        <div>
+          <h3 class="font-semibold mb-2 text-purple-700">
+            等宽字体 (monospace)
+          </h3>
+          <div
+            class="measure-box bg-purple-50 monospace"
+            style="font-size: 20px"
+          >
+            <p>abcdefghijklmnopqrstuvwxyz</p>
+            <p>ABCDEFGHIJKLMNOPQRSTUVWXYZ</p>
+            <p>1234567890!@#$%^&*()</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 字符宽度测量演示 -->
+    <div class="bg-white p-6 rounded-lg shadow-sm">
+      <h2 class="text-xl font-semibold mb-4 text-amber-600">4. 字符宽度测量</h2>
+      <p class="mb-4 text-gray-700">下方展示不同字符的实际宽度测量结果</p>
+
+      <div class="measure-box bg-amber-50" id="measurement-container">
+        <div class="mb-4" style="font-size: 24px">
+          <div class="flex items-center mb-2">
+            <span class="char-box mr-2">i</span>
+            <span class="measurement-result"
+              >宽度: <span id="width-i">--</span>px</span
+            >
+          </div>
+          <div class="flex items-center mb-2">
+            <span class="char-box mr-2">w</span>
+            <span class="measurement-result"
+              >宽度: <span id="width-w">--</span>px</span
+            >
+          </div>
+          <div class="flex items-center mb-2">
+            <span class="char-box mr-2">一</span>
+            <span class="measurement-result"
+              >宽度: <span id="width-zh">--</span>px</span
+            >
+          </div>
+          <div class="flex items-center">
+            <span class="char-box mr-2">木</span>
+            <span class="measurement-result"
+              >宽度: <span id="width-zh2">--</span>px</span
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // 测量并显示字符实际宽度
+      document.addEventListener("DOMContentLoaded", () => {
+        // 创建用于测量的临时元素
+        const measureEl = document.createElement("span");
+        measureEl.style.visibility = "hidden";
+        measureEl.style.position = "absolute";
+        measureEl.style.fontSize = "24px";
+        document.body.appendChild(measureEl);
+
+        // 测量字符宽度的函数
+        function getCharWidth(char) {
+          measureEl.textContent = char;
+          return measureEl.offsetWidth;
+        }
+
+        // 测量并显示结果
+        document.getElementById("width-i").textContent = getCharWidth("i");
+        document.getElementById("width-w").textContent = getCharWidth("w");
+        document.getElementById("width-zh").textContent = getCharWidth("一");
+        document.getElementById("width-zh2").textContent = getCharWidth("木");
+
+        // 移除临时元素
+        document.body.removeChild(measureEl);
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,57 @@
+/* 已知父元素高度，使用定位实现垂直居中 */
+.parent {
+  position: relative;
+  height: 400px;
+}
+.child {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* 使用Flexbox实现垂直居中 */
+.flex-container {
+  display: flex;
+  align-items: center; /* 垂直居中 */
+  height: 400px; /* 通常需要指定高度 */
+}
+
+/* 使用Grid实现垂直居中 */
+.grid-container {
+  display: grid;
+  align-items: center; /* 垂直居中 */
+  height: 400px;
+}
+
+/* 使用表格布局实现垂直居中 */
+.table-container {
+  display: table-cell;
+  vertical-align: middle;
+  height: 400px;
+}
+
+/* 父容器：用上下对称 padding 挤压子元素到垂直中间 */
+.parent {
+  padding: 50px 0; /* 上下padding相等（值自定义），左右为0 */
+  border: 1px solid #000; /* 辅助查看，非必需 */
+}
+/* 子元素：无需额外规则，继承父容器的垂直居中效果 */
+.child {
+  background: #f0f0f0; /* 辅助查看，非必需 */
+}
+
+/* 父容器：相对定位，作为子元素绝对定位的参考 */
+.parent {
+  position: relative; /* 必需，开启定位上下文 */
+  height: 200px; /* 父容器固定高度 */
+  border: 1px solid #000; /* 辅助查看，非必需 */
+}
+/* 子元素：绝对定位 + margin 负值抵消自身高度一半 */
+.child {
+  position: absolute; /* 脱离文档流，依赖父容器定位 */
+  top: 50%; /* 先定位到父容器垂直中点（上边缘对齐中点） */
+  margin-top: -50px; /* 向上偏移自身高度的一半（自身高度100px → -50px） */
+  width: 200px; /* 子元素定宽（可选，按需设置） */
+  height: 100px; /* 子元素必须已知高度，否则无法计算 margin 负值 */
+  background: #f0f0f0; /* 辅助查看，非必需 */
+}

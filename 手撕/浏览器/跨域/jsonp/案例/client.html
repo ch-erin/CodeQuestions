@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>JSONP 跨域示例</title>
+  </head>
+  <body>
+    <h1>JSONP 跨域请求结果</h1>
+    <div id="result"></div>
+
+    <script>
+      // 1. 定义回调函数（服务器返回的脚本会调用这个函数）
+      function handleResponse(data) {
+        const resultDiv = document.getElementById("result");
+        resultDiv.innerHTML = `
+            <p>用户名：${data.username}</p>
+            <p>年龄：${data.age}</p>
+            <p>来自：${data.from}</p>
+        `;
+      }
+
+      // 2. 动态创建 script 标签实现跨域请求
+      function jsonpRequest(url, callbackName) {
+        // 创建 script 标签
+        const script = document.createElement("script");
+
+        // 设置跨域请求地址（包含回调函数名）
+        script.src = `${url}?callback=${callbackName}`;
+
+        // 添加到页面，触发请求
+        document.body.appendChild(script);
+
+        // 请求完成后移除 script 标签（可选）
+        script.onload = () => {
+          document.body.removeChild(script);
+        };
+      }
+
+      // 3. 发起跨域请求（假设服务器地址为：http://localhost:4000/api/data）
+      jsonpRequest("http://localhost:4000/api/data", "handleResponse");
+    </script>
+  </body>
+</html>

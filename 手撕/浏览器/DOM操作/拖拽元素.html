@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>原生拖拽功能实现</title>
+    <style>
+      .draggable {
+        width: 150px;
+        height: 150px;
+        background-color: #4a90e2;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        cursor: move;
+        position: absolute;
+        user-select: none; /* 防止拖拽时文本被选中 */
+      }
+      .container {
+        width: 100vw;
+        height: 100vh;
+        position: relative;
+        border: 1px solid #ccc;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="draggable" id="draggableElement">拖拽我</div>
+    </div>
+
+    <script>
+      // 获取可拖拽元素
+      const draggable = document.getElementById("draggableElement");
+
+      // 存储拖拽状态和位置信息
+      let isDragging = false;
+      let offsetX, offsetY;
+
+      // 鼠标按下事件 - 开始拖拽
+      draggable.addEventListener("mousedown", (e) => {
+        isDragging = true;
+
+        // 计算鼠标在元素内的偏移量
+        offsetX = e.clientX - draggable.getBoundingClientRect().left;
+        offsetY = e.clientY - draggable.getBoundingClientRect().top;
+
+        // 添加视觉反馈
+        draggable.style.opacity = "0.8";
+        draggable.style.boxShadow = "0 4px 12px rgba(0,0,0,0.2)";
+      });
+
+      // 鼠标移动事件 - 元素跟随移动
+      document.addEventListener("mousemove", (e) => {
+        if (!isDragging) return;
+
+        // 防止默认行为，避免拖拽时选中文本等
+        e.preventDefault();
+
+        // 计算新位置（考虑滚动偏移）
+        const x = e.clientX - offsetX + window.scrollX;
+        const y = e.clientY - offsetY + window.scrollY;
+
+        // 设置元素新位置
+        draggable.style.left = `${x}px`;
+        draggable.style.top = `${y}px`;
+      });
+
+      // 鼠标释放事件 - 结束拖拽
+      document.addEventListener("mouseup", () => {
+        if (isDragging) {
+          isDragging = false;
+
+          // 恢复样式
+          draggable.style.opacity = "1";
+          draggable.style.boxShadow = "none";
+        }
+      });
+
+      // 鼠标离开窗口时也结束拖拽
+      document.addEventListener("mouseleave", () => {
+        if (isDragging) {
+          isDragging = false;
+          draggable.style.opacity = "1";
+          draggable.style.boxShadow = "none";
+        }
+      });
+    </script>
+  </body>
+</html>

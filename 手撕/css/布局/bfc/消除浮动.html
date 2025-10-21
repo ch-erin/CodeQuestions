@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <title>BFC 清除浮动 Demo</title>
+    <style>
+      /* 公共样式：父容器和子元素基础样式 */
+      .parent {
+        width: 400px;
+        margin: 20px auto;
+        background-color: #f0f0f0;
+        border: 2px solid #333;
+        /* 下面4种方式任选一种，均可触发 BFC 清除浮动 */
+
+        /* 方式1：overflow: hidden（最常用，无额外副作用） */
+        overflow: hidden;
+
+        /* 方式2：display: flow-root（CSS3 新增，专门用于触发 BFC，无副作用） */
+        /* display: flow-root; */
+
+        /* 方式3：position: absolute/fixed（脱离文档流，需注意布局影响） */
+        /* position: absolute; */
+
+        /* 方式4：float: left/right（脱离文档流，会影响父元素自身的布局） */
+        /* float: left; */
+      }
+
+      .child {
+        width: 100px;
+        height: 100px;
+        float: left; /* 子元素浮动，导致父元素高度塌陷（无 BFC 时） */
+        margin: 10px;
+        background-color: #4285f4;
+        color: white;
+        text-align: center;
+        line-height: 100px;
+        font-size: 18px;
+      }
+
+      /* 用于对比：无 BFC 的父元素（高度塌陷） */
+      .parent-no-bfc {
+        width: 400px;
+        margin: 20px auto;
+        background-color: #f0f0f0;
+        border: 2px solid #999;
+        /* 未触发 BFC，父元素高度塌陷 */
+      }
+    </style>
+  </head>
+  <body>
+    <h3>1. 无 BFC 的父元素（高度塌陷）</h3>
+    <div class="parent-no-bfc">
+      <div class="child">子元素1（浮动）</div>
+      <div class="child">子元素2（浮动）</div>
+    </div>
+    <p style="text-align: center; color: #666">
+      父元素未触发 BFC，高度塌陷（仅显示边框和背景色的细线）
+    </p>
+
+    <h3>2. 有 BFC 的父元素（清除浮动，正常包裹子元素）</h3>
+    <div class="parent">
+      <div class="child">子元素1（浮动）</div>
+      <div class="child">子元素2（浮动）</div>
+    </div>
+    <p style="text-align: center; color: #666">
+      父元素触发 BFC，正常包裹浮动子元素（背景色完整显示）
+    </p>
+  </body>
+</html>

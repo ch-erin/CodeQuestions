@@ -1,0 +1,61 @@
+/* 定位方式 */
+.parent {
+  position: relative;
+  height: 400px;
+}
+.child {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* 方法1：已知元素尺寸，基于固定定位 + margin负值 */
+.parent1 {
+  position: relative;
+  width: 500px;
+  height: 400px;
+  background: #f0f0f0;
+}
+
+.child1 {
+  width: 200px;
+  height: 150px;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  margin-top: -75px;
+  margin-left: -100px;
+
+  background: #4285f4;
+}
+
+/* Flexbox方式 */
+.flex-container {
+  display: flex;
+  justify-content: center; /* 水平 */
+  align-items: center; /* 垂直 */
+  height: 400px;
+  width: 500px;
+}
+
+/* Grid方式 */
+.grid-container {
+  display: grid;
+  place-items: center; /* 同时设置水平和垂直居中 */
+  height: 400px;
+}
+
+/* 表格方式 */
+.table-wrapper {
+  display: table;
+  width: 100%;
+  height: 400px;
+}
+.table-cell {
+  display: table-cell;
+  text-align: center; /* 水平 */
+  vertical-align: middle; /* 垂直 */
+}

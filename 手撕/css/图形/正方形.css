@@ -1,0 +1,12 @@
+.square {
+  width: 50%;
+  height: 50vw;
+  background-color: blue;
+}
+
+.square-calc {
+  width: calc(100% - 40px);
+  height: calc(100% - 40px);
+  background: plum;
+  margin: 0 auto;
+}

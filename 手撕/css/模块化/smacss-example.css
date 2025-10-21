@@ -1,0 +1,57 @@
+/* SMACSS (Scalable and Modular Architecture for CSS) 示例 */
+
+/* 1. 基础 (Base) - 元素默认样式 */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+/* 2. 布局 (Layout) - 页面结构 */
+.l-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px;
+  background-color: #f8f9fa;
+}
+
+.l-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+/* 3. 模块 (Module) - 可重用组件 */
+.card {
+  border: 1px solid #e9ecef;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.card__title {
+  padding: 16px;
+  font-size: 18px;
+  font-weight: bold;
+  border-bottom: 1px solid #e9ecef;
+}
+
+/* 4. 状态 (State) - 描述组件状态 */
+.is-active {
+  background-color: #e9ecef;
+}
+
+.is-hidden {
+  display: none;
+}
+
+/* 5. 主题 (Theme) - 外观样式 */
+.theme-dark .card {
+  border-color: #343a40;
+  background-color: #212529;
+  color: white;
+}

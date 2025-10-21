@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <title>BFC 解决 margin 重叠 Demo</title>
+    <style>
+      /* 公共样式：基础块级元素样式 */
+      .box {
+        width: 300px;
+        height: 100px;
+        background-color: #ea4335;
+        color: white;
+        text-align: center;
+        line-height: 100px;
+        font-size: 18px;
+      }
+
+      /* -------------------------- 场景1：相邻兄弟元素的 margin 重叠 -------------------------- */
+      .sibling1 {
+        margin-bottom: 50px; /* 下 margin: 50px */
+      }
+      .sibling2 {
+        margin-top: 30px; /* 上 margin: 30px */
+        background-color: #4285f4;
+      }
+      /* 无 BFC 时：相邻元素 margin 重叠，实际间距为 50px（取较大值） */
+
+      /* 触发 BFC 解决重叠：给 sibling2 外层套一个 BFC 容器 */
+      .bfc-container {
+        /* 触发 BFC 的方式（任选一种） */
+        overflow: hidden;
+        /* display: flow-root; */
+        /* position: absolute; */
+      }
+
+      /* -------------------------- 场景2：父子元素的 margin 重叠 -------------------------- */
+      .parent-margin {
+        width: 300px;
+        background-color: #f0f0f0;
+        border: 2px solid #333;
+        /* 无 BFC 时：子元素的 margin-top 会“传递”给父元素，导致父元素向下偏移 */
+      }
+      .child-margin {
+        width: 200px;
+        height: 80px;
+        margin-top: 30px; /* 子元素上 margin: 30px */
+        background-color: #fbbc05;
+        line-height: 80px;
+      }
+      /* 触发 BFC 解决重叠：给父元素触发 BFC */
+      .parent-margin-bfc {
+        width: 300px;
+        background-color: #f0f0f0;
+        border: 2px solid #333;
+        /* 触发 BFC，阻止子元素 margin 传递 */
+        overflow: hidden;
+        /* display: flow-root; */
+      }
+    </style>
+  </head>
+  <body>
+    <h3>场景1：相邻兄弟元素的 margin 重叠（无 BFC）</h3>
+    <div class="box sibling1">兄弟元素1（margin-bottom: 50px）</div>
+    <div class="box sibling2">兄弟元素2（margin-top: 30px）</div>
+    <p style="text-align: center; color: #666">
+      无 BFC：实际间距 = 50px（margin 重叠，取较大值）
+    </p>
+
+    <h3>场景1：相邻兄弟元素的 margin 不重叠（有 BFC）</h3>
+    <div class="box sibling1">兄弟元素1（margin-bottom: 50px）</div>
+    <!-- 给兄弟元素2套一个 BFC 容器，打破重叠 -->
+    <div class="bfc-container">
+      <div class="box sibling2">兄弟元素2（margin-top: 30px）</div>
+    </div>
+    <p style="text-align: center; color: #666">
+      有 BFC：实际间距 = 50px + 30px = 80px（margin 正常相加）
+    </p>
+
+    <h3>场景2：父子元素的 margin 重叠（无 BFC）</h3>
+    <div class="parent-margin">
+      <div class="child-margin">子元素（margin-top: 30px）</div>
+    </div>
+    <p style="text-align: center; color: #666">
+      无 BFC：子元素 margin-top 传递给父元素，父元素向下偏移 30px
+    </p>
+
+    <h3>场景2：父子元素的 margin 不重叠（有 BFC）</h3>
+    <div class="parent-margin-bfc">
+      <div class="child-margin">子元素（margin-top: 30px）</div>
+    </div>
+    <p style="text-align: center; color: #666">
+      有 BFC：父元素包裹子元素，子元素 margin-top 正常生效（父元素不偏移）
+    </p>
+  </body>
+</html>

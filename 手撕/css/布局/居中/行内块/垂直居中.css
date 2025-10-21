@@ -1,0 +1,29 @@
+/* 使用vertical-align */
+.parent {
+  height: 200px;
+  line-height: 200px; /* 用于基准线对齐 */
+}
+.inline-block-child {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: normal; /* 重置行高 */
+}
+
+/* 使用Flexbox */
+.flex-parent {
+  display: flex;
+  align-items: center;
+  height: 200px;
+}
+
+/* 使用定位 */
+.parent {
+  position: relative;
+  height: 200px;
+}
+.inline-block-child {
+  display: inline-block;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}

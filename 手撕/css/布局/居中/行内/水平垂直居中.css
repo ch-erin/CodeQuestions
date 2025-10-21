@@ -1,0 +1,25 @@
+.parent {
+  text-align: center;
+  height: 100px;
+  line-height: 100px;
+}
+
+.child {
+  height: 100px;
+}
+
+.parent {
+  text-align: center;
+  line-height: 100px; /* 定义行高，确保垂直空间 */
+  border: 1px solid #eee;
+  padding: 0 20px;
+}
+
+.icon {
+  font-size: 20px;
+  vertical-align: middle; /* 与基线居中对齐 */
+}
+
+.text {
+  vertical-align: middle; /* 与图标同步对齐 */
+}

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <style>
+    .carousel-container {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      border: 10px solid #000;
+      /* overflow: hidden; */
+    }
+
+    .carousel-wrapper {
+      display: flex;
+      width: 300px;
+      height: 200px;
+    }
+
+    .carousel-item {
+      flex: 0 0 100%;
+    }
+
+    .carousel-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  </style>
+
+  <body>
+    <div class="carousel-container">
+      <div class="carousel-wrapper">
+        <div class="carousel-item">
+          <img src="./images/3.png" alt="" />
+        </div>
+        <div class="carousel-item">
+          <img src="./images/1.png" alt="" />
+        </div>
+        <div class="carousel-item">
+          <img src="./images/2.jpg" alt="" />
+        </div>
+        <div class="carousel-item">
+          <img src="./images/3.png" alt="" />
+        </div>
+        <div class="carousel-item">
+          <img src="./images/1.png" alt="" />
+        </div>
+      </div>
+      <button class="prev-button">Previous</button>
+      <button class="next-button">Next</button>
+    </div>
+    <script>
+      const carouselWrapper = document.querySelector(".carousel-wrapper");
+      const carouselItems = document.querySelectorAll(".carousel-item");
+      const preButton = document.querySelector(".prev-button");
+      const nextButton = document.querySelector(".next-button");
+
+      const itemWidth = carouselItems[0].clientWidth;
+
+      let curIndex = 0;
+
+      // 初始化轮播图
+      function initCarousel() {
+        preButton.addEventListener("click", preButtonClick);
+        nextButton.addEventListener("click", nextButtonClick);
+        showItem(++curIndex);
+      }
+
+      function preButtonClick() {
+        curIndex = curIndex - 1;
+        carouselWrapper.style.transition = "transform 0.3s ease-in-out";
+
+        if (curIndex === 0) {
+          setTimeout(() => {
+            carouselWrapper.replaceChildren(...carouselItems);
+            carouselWrapper.style.transition = "none";
+
+            curIndex = carouselItems.length - 2;
+            showItem(curIndex);
+          }, 300);
+        }
+        showItem(curIndex);
+      }
+
+      function nextButtonClick() {
+        curIndex = curIndex + 1;
+        carouselWrapper.style.transition = "transform 0.3s ease-in-out";
+
+        if (curIndex === carouselItems.length - 1) {
+          setTimeout(() => {
+            carouselWrapper.replaceChildren(...carouselItems);
+            carouselWrapper.style.transition = "none";
+
+            curIndex = 1;
+            showItem(curIndex);
+          }, 300);
+        }
+
+        showItem(curIndex);
+      }
+
+      function showItem(index) {
+        carouselWrapper.style.transform = `translateX(-${itemWidth * index}px)`;
+      }
+
+      initCarousel();
+    </script>
+  </body>
+</html>

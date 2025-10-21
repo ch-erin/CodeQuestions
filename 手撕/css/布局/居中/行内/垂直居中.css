@@ -1,0 +1,20 @@
+/* 单行文本垂直居中 - 设置行高等于父元素高度 */
+.parent {
+  height: 100px;
+}
+.single-line-text {
+  line-height: 100px; /* 等于父元素高度 */
+}
+
+/* 多行文本垂直居中 - 使用padding */
+.multi-line-text {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+/* 使用Flexbox使行内元素垂直居中 */
+.flex-parent {
+  display: flex;
+  align-items: center;
+  height: 100px;
+}

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flex布局示例</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background-color: #f9fafb;
+        font-family: "Inter", system-ui, -apple-system, sans-serif;
+        color: #1f2937;
+        line-height: 1.5;
+      }
+
+      .container {
+        width: 100%;
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 24px;
+      }
+
+      h1 {
+        font-size: 28px;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 40px;
+        color: #1f2937;
+      }
+
+      /* 布局容器样式 */
+      .layout-container {
+        width: 100%;
+        max-width: 1152px;
+        margin: 32px auto;
+        padding: 16px;
+        border: 1px solid #e5e7eb;
+        border-radius: 0.5rem;
+        box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      }
+
+      .layout-title {
+        font-size: 20px;
+        font-weight: 700;
+        margin-bottom: 16px;
+        color: #1f2937;
+      }
+
+      .layout-title i {
+        margin-right: 8px;
+      }
+
+      /* Flex容器基础样式 */
+      .flex-container {
+        display: flex;
+        gap: 16px;
+      }
+
+      /* 列布局基础样式 */
+      .flex-column {
+        display: flex;
+        flex-direction: column;
+        height: 256px;
+      }
+
+      /* 列内容样式 */
+      .column-content {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        color: #374151;
+      }
+
+      /* 列1样式 */
+      .column-1 {
+        background-color: rgba(59, 130, 246, 0.1);
+        padding: 16px;
+        border: 1px solid rgba(59, 130, 246, 0.2);
+        border-radius: 0.5rem;
+      }
+
+      /* 列2样式 */
+      .column-2 {
+        background-color: rgba(16, 185, 129, 0.1);
+        padding: 16px;
+        border: 1px solid rgba(16, 185, 129, 0.2);
+        border-radius: 0.5rem;
+      }
+
+      /* 列3样式 */
+      .column-3 {
+        background-color: rgba(245, 158, 11, 0.1);
+        padding: 16px;
+        border: 1px solid rgba(245, 158, 11, 0.2);
+        border-radius: 0.5rem;
+      }
+
+      /* 宽度和比例样式 */
+      .w-64 {
+        width: 16rem;
+      }
+
+      .w-48 {
+        width: 12rem;
+      }
+
+      .flex-1 {
+        flex: 1;
+      }
+
+      .flex-2 {
+        flex: 2;
+      }
+
+      .flex-3 {
+        flex: 3;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Flex布局示例</h1>
+
+      <!-- 两栏布局 -->
+      <div class="layout-container">
+        <h2 class="layout-title">
+          <i class="fa fa-columns mr-2"></i>两栏布局
+          (侧边栏固定宽度，主内容自适应)
+        </h2>
+        <div class="flex-container">
+          <!-- 侧边栏 - 固定宽度 -->
+          <div class="column-1 w-64">
+            <div class="column-content">
+              <p>侧边栏 (固定宽度)</p>
+            </div>
+          </div>
+
+          <!-- 主内容 - 自适应剩余宽度 -->
+          <div class="column-2 flex-1">
+            <div class="column-content">
+              <p>主内容区 (自适应宽度)</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 两栏布局 - 另一种比例 -->
+      <div class="layout-container">
+        <h2 class="layout-title">
+          <i class="fa fa-columns mr-2"></i>两栏布局 (1:3 比例分配)
+        </h2>
+        <div class="flex-container">
+          <div class="column-1 flex-1">
+            <div class="column-content">
+              <p>左侧 (1份宽度)</p>
+            </div>
+          </div>
+          <div class="column-2 flex-3">
+            <div class="column-content">
+              <p>右侧 (3份宽度)</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 三栏布局 -->
+      <div class="layout-container">
+        <h2 class="layout-title">
+          <i class="fa fa-th-large mr-2"></i>三栏布局 (两侧固定，中间自适应)
+        </h2>
+        <div class="flex-container">
+          <!-- 左侧边栏 - 固定宽度 -->
+          <div class="column-1 w-48">
+            <div class="column-content">
+              <p>左侧边栏 (固定宽度)</p>
+            </div>
+          </div>
+
+          <!-- 主内容区 - 自适应 -->
+          <div class="column-2 flex-1">
+            <div class="column-content">
+              <p>主内容区 (自适应宽度)</p>
+            </div>
+          </div>
+
+          <!-- 右侧边栏 - 固定宽度 -->
+          <div class="column-3 w-48">
+            <div class="column-content">
+              <p>右侧边栏 (固定宽度)</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 三栏布局 - 按比例分配 -->
+      <div class="layout-container">
+        <h2 class="layout-title">
+          <i class="fa fa-th-large mr-2"></i>三栏布局 (1:2:1 比例分配)
+        </h2>
+        <div class="flex-container">
+          <div class="column-1 flex-1">
+            <div class="column-content">
+              <p>左侧 (1份)</p>
+            </div>
+          </div>
+          <div class="column-2 flex-2">
+            <div class="column-content">
+              <p>中间 (2份)</p>
+            </div>
+          </div>
+          <div class="column-3 flex-1">
+            <div class="column-content">
+              <p>右侧 (1份)</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

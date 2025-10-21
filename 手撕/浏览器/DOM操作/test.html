@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>双向绑定实现对比</title>
+  </head>
+  <body>
+    <!-- 双向绑定 -->
+    <div>
+      <div id="old">
+        <p>Object.defineProperty 实现</p>
+        <input />
+        <div>姓名：<span id="output_old"></span></div>
+      </div>
+      <br />
+      <div id="new">
+        <p>Proxy 实现</p>
+        <input />
+        <div>姓名：<span id="output_new"></span></div>
+      </div>
+    </div>
+    <script>
+      // Object.defineProperty 实现
+      function modelContent(inputSelector, outputSelector) {
+        const input = document.querySelector(inputSelector);
+        const output = document.querySelector(outputSelector);
+
+        let model = {};
+        let value = "初始值";
+
+        Object.defineProperty(model, "name", {
+          get() {
+            return value;
+          },
+          set(newValue) {
+            value = newValue;
+            input.value = newValue;
+            output.textContent = newValue;
+          },
+        });
+
+        input.addEventListener("input", () => {
+          model.name = input.value;
+        });
+
+        model.name = value;
+
+        window.oldModel = model;
+
+        return model;
+      }
+
+      // Proxy 实现
+      function modelContentProxy(inputSelector, outputSelector) {
+        const input = document.querySelector(inputSelector);
+        const output = document.querySelector(outputSelector);
+
+        const data = {
+          name: "初始值",
+        };
+
+        const model = new Proxy(data, {
+          get(target, prop) {
+            return target[prop];
+          },
+          set(target, prop, newValue) {
+            if (prop === "name" && target[prop] !== newValue) {
+              target[prop] = newValue;
+              input.value = newValue;
+              output.textContent = newValue;
+            }
+            return true;
+          },
+        });
+
+        input.addEventListener("input", () => {
+          model.name = input.value;
+        });
+
+        model.name = data.name;
+
+        window.newModel = model;
+
+        return model;
+      }
+
+      modelContent("#old input", "#output_old");
+      modelContentProxy("#new input", "#output_new");
+    </script>
+  </body>
+</html>
