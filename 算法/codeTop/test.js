@@ -1,8 +1,20 @@
-// 最长回文子串
-function longestPalindrome(s) {
-  if (s.length < 2) return s;
+// 两数之和
+function mark(nums, target) {
+  const map = new Map();
 
-  let res = "";
+  for (let i = 0; i < nums.length; i++) {
+    let count = target - nums[i];
 
-  return res;
+    if (map.has(count)) {
+      return [map.get(count), i];
+    }
+
+    map.set(nums[i], i);
+  }
+
+  return [];
 }
+
+const nums = [1, 7, 3, 2];
+const res = mark(nums, 4);
+console.log(res);

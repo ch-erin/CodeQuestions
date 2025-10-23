@@ -82,3 +82,5 @@ setTimeout(() => {
 const bus1 = new EventBus();
 const bus2 = new EventBus();
 console.log(bus1 === bus2); // true（证明是同一个实例）
+
+

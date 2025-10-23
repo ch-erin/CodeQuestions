@@ -3,7 +3,8 @@ function get(obj, path, value) {
 
   const keys = Array.isArray(path)
     ? path
-    : path.split(/[.[\]]/g).filter((key) => key);
+    : // 匹配所有.和类似“.[0]”的情况,“\]”是需要转移，不然会有歧义
+      path.split(/[.[\]]/g).filter((key) => key);
 
   let res = obj;
   for (let key of keys) {

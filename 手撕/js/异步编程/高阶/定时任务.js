@@ -11,5 +11,9 @@ const fastTask = () =>
 const slowTask = () =>
   new Promise((resolve) => setTimeout(() => resolve("任务完成"), 3000));
 
-withTimeout(fastTask, 1000).then(console.log).catch(console.error);
-withTimeout(slowTask, 1000).then(console.log).catch(console.error);
+withTimeout(fastTask, 1000)
+  .then((result) => console.log(result))
+  .catch((err) => console.error(err));
+withTimeout(slowTask, 1000)
+  .then((result) => console.log(result))
+  .catch((err) => console.error(err));

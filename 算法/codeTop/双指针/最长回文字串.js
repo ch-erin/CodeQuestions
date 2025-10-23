@@ -1,14 +1,15 @@
-const longestPalindrome = function (s) {
+// 最长回文子串
+function longestPalindrome(s) {
   if (s.length < 2) return s;
 
   let res = "";
 
   for (let i = 0; i < s.length; i++) {
-    hepler(i, i);
-    hepler(i, i + 1);
+    helper(i, i); // 针对奇数长度
+    helper(i, i + 1); // 针对偶数长度
   }
 
-  function hepler(m, n) {
+  function helper(m, n) {
     while (m >= 0 && n < s.length && s[m] === s[n]) {
       m--;
       n++;
@@ -17,4 +18,4 @@ const longestPalindrome = function (s) {
   }
 
   return res;
-};
+}
