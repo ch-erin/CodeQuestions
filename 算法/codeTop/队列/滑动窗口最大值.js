@@ -6,7 +6,7 @@ function maxSlidingWindow(nums, k) {
     while (q.length && nums[q[q.length - 1]] <= nums[i]) q.pop();
     q.push(i);
 
-    if (i - q[0] >= k) q.shift(i);
+    if (i - q[0] >= k) q.shift();
 
     if (i >= k - 1) ans.push(nums[q[0]]);
   }

@@ -23,6 +23,3 @@ function reverse(head) {
 const res = reverse(head);
 console.log(res);
 
-//过于简单
-
-//指向根本不用在意

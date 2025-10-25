@@ -13,12 +13,21 @@
       .son {
         display: inline-block;
         vertical-align: middle;
+        flex-shrink: 0;
+      }
+      .mom {
+        display: flex;
+        justify-content: space-between;
       }
     </style>
   </head>
   <body>
     <div class="parent">
       <span>hello world</span>
+    </div>
+
+    <div onclick="console.log(1)">
+      <button onclick="console.log(2)"></button>
     </div>
   </body>
 </html>

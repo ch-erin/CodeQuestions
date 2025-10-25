@@ -1,11 +1,7 @@
-const isSymmetric = Array.prototype.isSymmetric;
-
-isSymmetric = function (root) {
-  if (!root) return true;
-
+function isSymmetric(root) {
   const queue = [root.left, root.right];
 
-  while (queue.length > 0) {
+  while (queue.length) {
     const left = queue.shift();
     const right = queue.shift();
 
@@ -20,4 +16,4 @@ isSymmetric = function (root) {
   }
 
   return true;
-};
+}

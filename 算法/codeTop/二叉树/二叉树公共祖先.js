@@ -1,10 +1,10 @@
-//二叉树最近公共祖先
+function father(root, q, p) {
+  if (!root) return;
 
-function father(root, p, q) {
-  if (!root || root === p || root === q) return root;
+  if (root === q || root === p) return root;
 
-  let left = father(root.left, p, q);
-  let right = father(root.right, p, q);
+  let left = father(root.left, q, p);
+  let right = father(root.right, q, p);
 
   if (left && right) return root;
 
