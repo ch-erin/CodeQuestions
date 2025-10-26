@@ -18,7 +18,7 @@ class LRU {
   }
 
   get(key) {
-    if (!key in this.cache) return -1;
+    if (!this.cache.has(key)) return -1;
     const node = this.cache.get(key);
     this.moveToHead(node);
     return node.value;

@@ -29,3 +29,9 @@ function thousandSeparator(num) {
 
   return sign + formattedInteger + (decimal ? "." + decimal : "");
 }
+
+function thousandSeparator(number) {
+  let res = number.toString();
+
+  return res.replace(/\B(?=(\d{3})+(?!\d))/g);
+}
