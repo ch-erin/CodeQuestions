@@ -27,15 +27,20 @@ function deepClone(obj, hash = new WeakMap()) {
 }
 
 // 简单版，只考虑对象
-function deepClone(obj, hash = new WeakMap()) {
+function deepClone(obj, hash = WeakMap()) {
+  if (obj === null || typeof obj !== "object") return obj;
+
   if (hash.has(obj)) return hash.get(obj);
 
   const constr = new obj.constructor();
+
   hash.set(obj, constr);
 
-  for (const key in obj) {
-    if (obj.hasOwnProperty(key)) {
-      constr[key] = deepClone(obj[key], hash);
+  for (let key in obj) {
+    if (obj[key] === null || typeof obj[key] !== "object") {
+      constr[key] = obj[key];
+    } else {
+      constr[key] = deepClone(obj[k], hash);
     }
   }
 

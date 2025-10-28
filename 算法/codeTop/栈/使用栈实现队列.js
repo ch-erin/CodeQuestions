@@ -1,31 +1,40 @@
+// 核心思想 : 双栈倒换
+
 class QueueMadeByStacks {
   constructor() {
-    this.stackIn = []; // 用于入队操作的栈
-    this.stackOut = []; // 用于出队操作的栈
+    this.in = []; // 入栈
+    this.out = []; // 出栈
   }
 
-  // 入队操作：将元素压入 stackIn
-  push(element) {
-    this.stackIn.push(element);
+  push(e) {
+    this.in.push(e);
   }
 
   pop() {
-    // 如果 stackOut 为空，则需要将 stackIn 的元素“倒入” stackOut
-    if (this.stackOut.length === 0) {
-      // 倒的过程中，stackIn 中先进入的元素会被压入 stackOut 的底部
-      while (this.stackIn.length > 0) {
-        this.stackOut.push(this.stackIn.pop());
+    if (!this.out.length) {
+      while (this.in.length > 0) {
+        this.out.push(this.in.pop());
       }
     }
-    if (this.stackOut.length === 0) {
+    if (this.out.length === 0) {
       throw new Error("Cannot pop from an empty queue.");
     }
-    return this.stackOut.pop();
+
+    return this.out.pop();
   }
 
-  // 返回队列中的元素总数
-  count() {
-    return this.stackIn.length + this.stackOut.length;
+  peek() {
+    const val = this.pop();
+    this.out.push(val);
+    return val;
+  }
+
+  isEmpty() {
+    return this.in.length === 0 && this.out.length === 0;
+  }
+
+  size() {
+    return this.in.length + this.out.length;
   }
 }
 
@@ -35,7 +44,7 @@ myQueue.push(1);
 myQueue.push(2);
 myQueue.push(3);
 
-console.log(myQueue.count()); // 输出: 3
+console.log(myQueue.size()); // 输出: 3
 
 console.log(myQueue.pop()); // 输出: 1 (最先入队的元素)
 console.log(myQueue.pop()); // 输出: 2

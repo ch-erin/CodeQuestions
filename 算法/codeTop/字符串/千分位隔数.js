@@ -1,4 +1,4 @@
-const thousandSeparator = function (n) {
+function thousandSeparator(n) {
   if (n === 0) return "0";
 
   let count = 0;
@@ -14,4 +14,15 @@ const thousandSeparator = function (n) {
   }
 
   return ans.split("").reverse().join("");
-};
+}
+
+let s = "abcabcabcc";
+
+function thousandSeparator(n) {
+  let s = n.toString();
+
+  return s.replace(/\B(?=(\d{3})+(?!\d))/g, "");
+}
+
+
+const res = thousandSeparator(s)

@@ -1,20 +1,28 @@
-// 两数之和
-function mark(nums, target) {
-  const map = new Map();
+function myAsync(generatorFunc) {
+  return function (...args) {
+    const generator = generatorFunc.apply(this, args);
 
-  for (let i = 0; i < nums.length; i++) {
-    let count = target - nums[i];
+    const step = (key, arg) => {
+      return new Promise((resolve, reject) => {
+        let result;
 
-    if (map.has(count)) {
-      return [map.get(count), i];
-    }
+        try {
+          result = generator[key](arg);
+        } catch (error) {
+          return reject(error);
+        }
 
-    map.set(nums[i], i);
-  }
+        const { value, done } = result;
 
-  return [];
+        if (done) return resolve(value);
+
+        Promise.resolve(value).then(
+          (val) => step("next", val).then(resolve, reject),
+          (err) => step("throw", err).then(resolve, reject)
+        );
+      });
+    };
+
+    return step("next");
+  };
 }
-
-const nums = [1, 7, 3, 2];
-const res = mark(nums, 4);
-console.log(res);

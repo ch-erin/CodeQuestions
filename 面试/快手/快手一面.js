@@ -15,7 +15,7 @@ var obj = {
   })(),
 };
 
-var myCall = obj.fn;
-myCall.call(window);
-obj.fn();
-console.log(this.number);
+var myCall = obj.fn; //  number : 3
+myCall.call(window); //  this.number = 5  15, 6
+obj.fn(); //     9,  12
+console.log(this.number); // 5
