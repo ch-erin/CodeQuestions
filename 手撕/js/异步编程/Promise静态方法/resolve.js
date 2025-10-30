@@ -1,5 +1,7 @@
-function myReslove(promise) {
-  if (promise instanceof Promise) return promise;
+// promise.reslove
+
+Promise.resolve = function (value) {
+  if (value instanceof Promise) return value;
 
   const isThenAble = (value) => {
     return (
@@ -9,6 +11,7 @@ function myReslove(promise) {
     );
   };
 
+  // 兼容非 promise对象
   if (isThenAble(value)) {
     return new Promise((resolve, reject) => {
       try {
@@ -19,5 +22,6 @@ function myReslove(promise) {
     });
   }
 
+  // 普通值
   return new Promise((resolve) => resolve(value));
-}
+};

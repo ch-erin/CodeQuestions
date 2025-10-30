@@ -39,10 +39,25 @@ function myAsync(generatorFunc) {
   };
 }
 
-/**
- * await 的模拟实现（实际上就是 yield）
- * 这里只是为了语义更清晰
- */
-function myAwait(value) {
-  return value;
+const fetchData = (name, delay) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      console.log(`获取 ${name} 成功`);
+      resolve(`数据：${name}`);
+    }, delay);
+  });
+};
+
+function* dataLoader() {
+  console.log("开始加载数据");
+  const user = yield fetchData("用户信息", 1000);
+  const goods = yield fetchData("商品列表", 500);
+  console.log("数据加载完毕");
+  return { user, goods };
 }
+
+const loadData = myAsync(dataLoader);
+
+loadData().then((result) => {
+  console.log("最终结果：", result);
+});

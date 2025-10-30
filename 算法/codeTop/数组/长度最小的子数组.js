@@ -14,7 +14,7 @@ let minSubArrayLen = function (target, nums) {
       sum -= nums[left];
       left++;
     }
-    if (sum >= target) n = Math.min(ans, right - left + 1);
+    if (sum >= target) n = Math.max(ans, right - left + 1);
   }
 
   return ans <= n ? ans : 0;
