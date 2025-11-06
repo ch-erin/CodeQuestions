@@ -2,17 +2,15 @@ function myStringify(a) {
   const hash = new WeakSet();
 
   function stringify(value) {
-    // 循环引用报错
     const error = () => {
       throw new TypeError("Converting circular structure to JSON");
     };
 
     if (value === null) return "null";
-    if (typeof value === "boolean") return value ? true : false;
+    if (typeof value === "boolean") return value ? '"true"' : '"false"';
 
-    // NaN 和 Infinity
     if (typeof value === "number") {
-      return isNaN(value) || isFinite(value) ? "null" : String(value);
+      return isNaN(value) || !isFinite(value) ? "null" : String(value);
     }
 
     if (typeof value === "string") {
@@ -20,11 +18,11 @@ function myStringify(a) {
         .replace(/\\/g, "\\\\")
         .replace(/"/g, '\\"')
         .replace(/\t/g, "\\t")
-        .replace(/\b/g, "\\b")
         .replace(/\f/g, "\\f")
-        .replace(/\n/g, "\\n")
-        .replace(/\r/g, "\\r");
-      return escaped;
+        .replace(/\r/g, "\\r")
+        .replace(/\n/g, "\\n");
+
+      return `"${escaped}"`;
     }
 
     if (value instanceof Date) return `${value.toString()}`;
@@ -44,12 +42,15 @@ function myStringify(a) {
 
       const pairs = Object.keys(value).map((item) => {
         const Key = stringify(item);
-        const Value = stringify(value[Key]);
+        const Value = stringify(value[item]);
         return `${Key}:${Value}`;
       });
+
       return `{${pairs.join(",")}}`;
     }
 
-    return "undefiend";
+    return "undefined";
   }
+
+  return stringify(a);
 }

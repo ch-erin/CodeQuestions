@@ -10,12 +10,10 @@ function hasCircularReference(obj) {
 
     visited.add(node);
 
-    for (const key in node) {
-      if (node.hasOwnProperty(key)) {
-        if (check(node[key])) {
-          return true;
-        }
-      }
+    const keyList = Object.keys(node);
+
+    for (let key of keyList) {
+      if (check(node[key])) return true;
     }
 
     visited.delete(node);
